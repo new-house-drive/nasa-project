@@ -1,0 +1,19 @@
+{
+  "name": "udemy-nasa-project",
+  "version": "1.0.0",
+  "description": "React based front-end and node.js server side",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/new-house-drive/nasa-project.git"
+  },
+  "author": "pineapple",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/new-house-drive/nasa-project/issues"
+  },
+  "homepage": "https://github.com/new-house-drive/nasa-project#readme"
+}
