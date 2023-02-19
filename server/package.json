@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "launch": "nodemon server.js"
+    "start": "node src/server.js",
+    "launch": "nodemon src/server.js",
+    "launch5000Win": "set PORT=5000&& node src/server.js"
   },
   "keywords": [],
   "author": "",
