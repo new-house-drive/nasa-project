@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/new-house-drive/nasa-project/issues"
   },
-  "homepage": "https://github.com/new-house-drive/nasa-project#readme"
+  "homepage": "https://github.com/new-house-drive/nasa-project#readme",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }
