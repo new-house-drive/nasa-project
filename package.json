@@ -4,6 +4,9 @@
   "description": "React based front-end and node.js server side",
   "main": "index.js",
   "scripts": {
+    "server": "npm run launch --prefix server",
+    "client": "npm start --prefix client",
+    "watch": "npm run server & npm run client",
     "test": "test"
   },
   "repository": {
@@ -18,5 +21,6 @@
   "homepage": "https://github.com/new-house-drive/nasa-project#readme",
   "dependencies": {
     "cors": "^2.8.5"
-  }
+  },
+  "devDependencies": {}
 }
