@@ -28,7 +28,20 @@ function addLaunch(newLaunch) {
     }))
 }
 
+function existsLaunchID(id) {
+    return launches.has(id)
+}
+
+function abortLaunch(id) {
+    const aborted = launches.get(id)
+    aborted.success = false
+    aborted.upcoming = false
+    return aborted
+}
+
 module.exports = {
     getAllLaunches,
-    addLaunch
+    addLaunch,
+    existsLaunchID,
+    abortLaunch
 }
