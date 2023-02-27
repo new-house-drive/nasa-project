@@ -5,7 +5,7 @@ const launch = {
     flightNumber: 100,
     launchDate: new Date('October 13, 2004'),
     mission: "Balshie +",
-    destination: "Planeta AZOV",
+    target: "Planeta AZOV",
     rocket: 'Balshie DF',
     success: true,
     upcoming: true,

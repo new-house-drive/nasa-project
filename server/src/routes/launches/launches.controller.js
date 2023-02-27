@@ -7,7 +7,7 @@ function httpGetAllLaunches(req, res) {
 function httpAddNewLaunch(req, res) {
     const launch = req.body
     if (!launch.mission 
-        || !launch.destination 
+        || !launch.target 
         || !launch.rocket 
         || !launch.launchDate) 
         {
@@ -15,7 +15,16 @@ function httpAddNewLaunch(req, res) {
                 "error": "Missing information!  🥺👉👈"
             })
     }
+
     launch.launchDate = new Date(launch.launchDate)
+
+    if(launch.launchDate.toString() === "Invalid Date") {
+        return res.status(400).json({
+            "error": "Date is invalid!  🥺👉👈"
+        })
+    }
+
+
     addLaunch(launch)
     return res.status(201).json(launch)
 
