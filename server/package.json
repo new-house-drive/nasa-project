@@ -7,7 +7,7 @@
     "test": "jest",
     "test-watch": "jest --watch",
     "start": "node src/server.js --watch",
-    "cluster": "pm2 start src/server.js"
+    "cluster": "pm2 start src/server.js -i max"
   },
   "keywords": [],
   "author": "",
