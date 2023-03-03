@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch",
-    "start": "node src/server.js --watch"
+    "start": "node src/server.js --watch",
+    "cluster": "pm2 start src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,8 @@
     "cors": "^2.8.5",
     "csv-parse": "^5.3.5",
     "express": "^4.18.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "pm2": "^5.2.2"
   },
   "devDependencies": {
     "emoji": "^0.3.2",
