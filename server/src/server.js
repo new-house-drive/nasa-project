@@ -23,7 +23,7 @@ async function startServer() {
     await loadPlanetsData();
     server.listen(PORT, () => {
         try{
-        //throw new Error('Vasha mamka')
+        //throw new Error('Your momma')
         console.log(`✔️  It works, for now. ${PORT}`)
         }
         catch(error) {
