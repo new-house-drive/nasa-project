@@ -1,4 +1,6 @@
+// const launches = require('./launches.mongo')
 const launches = new Map()
+
 let lastFlightNumber = 100
 
 const launch = {
