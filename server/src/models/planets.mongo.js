@@ -5,3 +5,7 @@ const planetSchema = mongoose.Schema({
     type: String,
     required: true,
   }});
+
+const planets = mongoose.model('Planet', planetSchema)
+
+module.exports = planets
