@@ -52,14 +52,7 @@ function loadPlanetsData() {
       )
       .on("data", async (planet) => {
         if (isHabitablePlanet(planet)) {
-          habitablePlanets.push(planet);
-          // TODO: replace the code with upsert
-          // insert + update = upsert
-          await planets.updateOne({
-            keplerName: planet.kepler_name
-          }, {
-            keplerName: planet.kepler_name
-          })
+          await savePlanet(planet);
         }
       })
       .on("end", () => {
@@ -72,6 +65,17 @@ function loadPlanetsData() {
         reject(err);
       });
   });
+}
+
+async function savePlanet(planet) {
+  await planets.updateOne({
+    keplerName: planet.kepler_name
+  }, {
+    keplerName: planet.kepler_name
+  },
+    {
+      upsert: true
+    });
 }
 
 async function getAllPlanets() {
