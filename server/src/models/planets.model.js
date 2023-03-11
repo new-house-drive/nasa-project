@@ -57,6 +57,8 @@ function loadPlanetsData() {
           // insert + update = upsert
           await planets.updateOne({
             keplerName: planet.kepler_name
+          }, {
+            keplerName: planet.kepler_name
           })
         }
       })
