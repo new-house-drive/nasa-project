@@ -42,7 +42,7 @@ function loadPlanetsData(){
   )
   .on("data", async (planet) => {
     if (isHabitablePlanet(planet)) {
-      // habitablePlanets.push(planet);
+      habitablePlanets.push(planet);
       // TODO: replace the code with upsert
       // insert + update = upsert
       // await planets.create({
@@ -51,7 +51,7 @@ function loadPlanetsData(){
     }
   })
   .on("end", () => {
-    console.log("We are done!");
+    console.log("☪️ We are done!");
     resolve();
   })
   .on("error", (err) => {
