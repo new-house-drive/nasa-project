@@ -1,4 +1,5 @@
 const launchesDatabase = require("./launches.mongo");
+const planetsDatabase = require('./planets.mongo')
 // const launchesDatabase = new Map()
 
 let lastFlightNumber = 100;
@@ -6,8 +7,8 @@ let lastFlightNumber = 100;
 const launch = {
   flightNumber: 100,
   launchDate: new Date("October 13, 2004"),
-  mission: "Balshie +",
-  target: "Planeta AZOV",
+  mission: "Balshie Premium",
+  target: "Planeta Kepler-1649 b",
   rocket: "Balshie DF",
   success: true,
   upcoming: true,
@@ -31,7 +32,7 @@ async function getAllLaunches() {
 }
 
 /**
- * function addLaunch used to work as saver
+ * function addLaunch used to work as a software to work with Object. deprecated at the moment
  *  
  *  
  */
@@ -62,6 +63,15 @@ function abortLaunch(id) {
 
 async function saveLaunch(launch) {
   try {
+    const planet = await planetsDatabase.findOne({
+      keplerName: launch.target
+    })
+
+    if(!planet) {
+      throw new Error(`🧞 ${launch.mission} cannot be added because ${launch.target} is not a habitable planet. 👾`)
+    }
+
+
     await launchesDatabase.updateOne(
       {
         flightNumber: launch.flightNumber,
