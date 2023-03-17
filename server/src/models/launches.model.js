@@ -2,13 +2,11 @@ const launchesDatabase = require("./launches.mongo");
 const planetsDatabase = require('./planets.mongo')
 // const launchesDatabase = new Map()
 
-let lastFlightNumber = 100;
-
 const launch = {
   flightNumber: 100,
   launchDate: new Date("October 13, 2004"),
   mission: "Balshie Premium",
-  target: "Planeta Kepler-1649 b",
+  target: "Kepler-1649 b",
   rocket: "Balshie DF",
   success: true,
   upcoming: true,
