@@ -1,5 +1,5 @@
-const launches = require("./launches.mongo");
-// const launches = new Map()
+const launchesDatabase = require("./launches.mongo");
+// const launchesDatabase = new Map()
 
 let lastFlightNumber = 100;
 
@@ -16,31 +16,45 @@ const launch = {
 
 saveLaunch(launch)
 
-launches.set(launch.flightNumber, launch);
+// launchesDatabase.set(launch.flightNumber, launch);
 
-function getAllLaunches() {
-  return Array.from(launches.values());
+/** 
+  returns all values in MongoDB launches collection
+
+  version: 1.0 valera
+*/
+async function getAllLaunches() {
+  return await launchesDatabase.find({}, {
+    "_id": 0,
+    "__V": 0
+  });
 }
 
-function addLaunch(newLaunch) {
-  lastFlightNumber++;
-  launches.set(
-    lastFlightNumber,
-    Object.assign(newLaunch, {
-      flightNumber: lastFlightNumber,
-      customers: ["Max Kats", "Steve Huys", "Gazdurbal Kalachakrovich"],
-      upcoming: true,
-      success: true,
-    })
-  );
-}
+/**
+ * function addLaunch used to work as saver
+ *  
+ *  
+ */
+
+// function addLaunch(newLaunch) {
+//   lastFlightNumber++;
+//   launchesDatabase.set(
+//     lastFlightNumber,
+//     Object.assign(newLaunch, {
+//       flightNumber: lastFlightNumber,
+//       customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
+//       upcoming: true,
+//       success: true,
+//     })
+//   );
+// }
 
 function existsLaunchID(id) {
-  return launches.has(id);
+  return launchesDatabase.has(id);
 }
 
 function abortLaunch(id) {
-  const aborted = launches.get(id);
+  const aborted = launchesDatabase.get(id);
   aborted.success = false;
   aborted.upcoming = false;
   return aborted;
@@ -48,7 +62,7 @@ function abortLaunch(id) {
 
 async function saveLaunch(launch) {
   try {
-    await launches.updateOne(
+    await launchesDatabase.updateOne(
       {
         flightNumber: launch.flightNumber,
       },
@@ -64,7 +78,7 @@ async function saveLaunch(launch) {
 
 module.exports = {
   getAllLaunches,
-  addLaunch,
+  saveLaunch,
   existsLaunchID,
   abortLaunch,
 };
