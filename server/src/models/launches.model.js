@@ -1,9 +1,11 @@
 const launchesDatabase = require("./launches.mongo");
-const planetsDatabase = require('./planets.mongo')
+const planetsDatabase = require("./planets.mongo");
 // const launchesDatabase = new Map()
 
+const DEFAULT_FLIGHT_NUMBER = 100;
+
 const launch = {
-  flightNumber: 100,
+  flightNumber: DEFAULT_FLIGHT_NUMBER,
   launchDate: new Date("October 13, 2004"),
   mission: "Balshie Premium",
   target: "Kepler-1649 b",
@@ -13,7 +15,7 @@ const launch = {
   customers: ["Dmytro Faliush", "Olena Metelyk"],
 };
 
-saveLaunch(launch)
+saveLaunch(launch);
 
 // launchesDatabase.set(launch.flightNumber, launch);
 
@@ -23,16 +25,37 @@ saveLaunch(launch)
   version: 1.0 valera
 */
 async function getAllLaunches() {
-  return await launchesDatabase.find({}, {
-    "_id": 0,
-    "__V": 0
-  });
+  return await launchesDatabase.find(
+    {},
+    {
+      _id: 0,
+      __V: 0,
+    }
+  );
+}
+
+/**
+ *  returns the latest flight Number in mongo collection. Sorts in DESCENDING ORDER
+ *  Used only in saveLaunch()
+ *
+ *  version 1.0.
+ *  valera.
+ */
+
+async function getLatestFlightNumber() {
+  const latestFlightNumber = await launchesDatabase
+    .findOne()
+    .sort("-flightNumber").flightNumber;
+
+  if (!latestFlightNumber) return DEFAULT_FLIGHT_NUMBER;
+
+  return latestFlightNumber;
 }
 
 /**
  * function addLaunch used to work as a software to work with Object. deprecated at the moment
- *  
- *  
+ *
+ *
  */
 
 // function addLaunch(newLaunch) {
@@ -62,17 +85,20 @@ function abortLaunch(id) {
 async function saveLaunch(launch) {
   try {
     const planet = await planetsDatabase.findOne({
-      keplerName: launch.target
-    })
+      keplerName: launch.target,
+    });
 
-    if(!planet) {
-      throw new Error(`🧞 ${launch.mission} cannot be added because ${launch.target} is not a habitable planet. 👾`)
+    if (!planet) {
+      throw new Error(
+        `🧞 ${launch.mission} cannot be added because ${launch.target} is not a habitable planet. 👾`
+      );
     }
 
+    const newFlightNumber = getLatestFlightNumber() + 1;
 
     await launchesDatabase.updateOne(
       {
-        flightNumber: launch.flightNumber,
+        flightNumber: newFlightNumber,
       },
       launch,
       {
