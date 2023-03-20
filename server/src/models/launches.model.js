@@ -14,9 +14,6 @@ const launch = {
   upcoming: true,
   customers: ["Dmytro Faliush", "Olena Metelyk"],
 };
-
-saveLaunch(launch);
-
 // launchesDatabase.set(launch.flightNumber, launch);
 
 /** 
@@ -106,7 +103,7 @@ async function saveLaunch(launch) {
 async function scheduleLaunch(launch) {
 
   const newFlightNumber = await getLatestFlightNumber() + 1
-  const newLaunch = new Object.assign(launch, {
+  const newLaunch = Object.assign(launch, {
     flightNumber: newFlightNumber,
     customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
     upcoming: true,
