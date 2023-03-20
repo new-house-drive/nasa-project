@@ -50,19 +50,29 @@ async function getLatestFlightNumber() {
 }
 
 /**
- * function addLaunch used to work as a software to 
- * work with Object. deprecated at the moment
+ * existsLaunchID now uses the MongoDB
+ * for connection
+ * 
+ * version 1.1.
+ * valera
  */
-
-function existsLaunchID(id) {
-  return launchesDatabase.has(id);
+async function existsLaunchID(id) {
+  return await launchesDatabase.findOne({
+    flightNumber: id
+  });
 }
+/**
+ * abortLaunch function handles the request from 
+ * the controller and updates the database
+ * 
+ * version 1.1 valera 
+ */
+async function abortLaunch(launch) {
 
-function abortLaunch(id) {
-  const aborted = launchesDatabase.get(id);
-  aborted.success = false;
-  aborted.upcoming = false;
-  return aborted;
+  // const aborted = launchesDatabase.get(id);
+  // aborted.success = false;
+  // aborted.upcoming = false;
+  // return aborted;
 }
 
 async function saveLaunch(launch) {
