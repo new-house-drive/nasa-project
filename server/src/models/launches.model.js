@@ -110,6 +110,18 @@ async function saveLaunch(launch) {
   }
 }
 
+/**
+ * schedule launch function handles the same
+ * logic that saveLaunch() does, but validates
+ * that all the data is passed correctly
+ * 
+ * v. 1.0 valera
+ */
+
+function scheduleLaunch() {
+
+}
+
 module.exports = {
   getAllLaunches,
   saveLaunch,
