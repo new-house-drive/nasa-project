@@ -42,11 +42,11 @@ async function getAllLaunches() {
 async function getLatestFlightNumber() {
   const latestFlightNumber = await launchesDatabase
     .findOne()
-    .sort("-flightNumber").flightNumber;
+    .sort("-flightNumber");
 
-  if (!latestFlightNumber) return DEFAULT_FLIGHT_NUMBER;
+  if (!latestFlightNumber.flightNumber) return DEFAULT_FLIGHT_NUMBER;
 
-  return latestFlightNumber;
+  return latestFlightNumber.flightNumber;
 }
 
 /**
@@ -77,11 +77,9 @@ async function saveLaunch(launch) {
       );
     }
 
-    const newFlightNumber = getLatestFlightNumber() + 1;
-
     await launchesDatabase.updateOne(
       {
-        flightNumber: newFlightNumber,
+        flightNumber: launch.flightNumber,
       },
       launch,
       {
