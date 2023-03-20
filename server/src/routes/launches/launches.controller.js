@@ -31,10 +31,10 @@ async function httpAddNewLaunch(req, res) {
 
 }
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
     const launchID = +req.params.id
-
-    if (existsLaunchID(launchID)) {
+    const idIsExisting = await existsLaunchID(launchID)
+    if (idIsExisting) {
         const aborted = abortLaunch(launchID)
         return res.status(200).json(aborted)
     }
