@@ -53,23 +53,9 @@ async function getLatestFlightNumber() {
 }
 
 /**
- * function addLaunch used to work as a software to work with Object. deprecated at the moment
- *
- *
+ * function addLaunch used to work as a software to 
+ * work with Object. deprecated at the moment
  */
-
-// function addLaunch(newLaunch) {
-//   lastFlightNumber++;
-//   launchesDatabase.set(
-//     lastFlightNumber,
-//     Object.assign(newLaunch, {
-//       flightNumber: lastFlightNumber,
-//       customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
-//       upcoming: true,
-//       success: true,
-//     })
-//   );
-// }
 
 function existsLaunchID(id) {
   return launchesDatabase.has(id);
@@ -114,13 +100,30 @@ async function saveLaunch(launch) {
  * schedule launch function handles the same
  * logic that saveLaunch() does, but validates
  * that all the data is passed correctly
- * 
+ *
  * v. 1.0 valera
  */
 
-function scheduleLaunch() {
-
+function scheduleLaunch(launch) {
+  const newlaunch = new Object.assign(launch, {
+    customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
+    upcoming: true,
+    success: true,
+  });
 }
+
+// function addLaunch(newLaunch) {
+//   lastFlightNumber++;
+//   launchesDatabase.set(
+//     lastFlightNumber,
+//     Object.assign(newLaunch, {
+//       flightNumber: lastFlightNumber,
+//       customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
+//       upcoming: true,
+//       success: true,
+//     })
+//   );
+// }
 
 module.exports = {
   getAllLaunches,
