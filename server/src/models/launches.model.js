@@ -77,7 +77,7 @@ async function saveLaunch(launch) {
       );
     }
 
-    await launchesDatabase.updateOne(
+    await launchesDatabase.findOneAndUpdate(
       {
         flightNumber: launch.flightNumber,
       },
