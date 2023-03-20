@@ -103,13 +103,17 @@ async function saveLaunch(launch) {
  *
  * v. 1.0 valera
  */
+async function scheduleLaunch(launch) {
 
-function scheduleLaunch(launch) {
-  const newlaunch = new Object.assign(launch, {
+  const newFlightNumber = await getLatestFlightNumber() + 1
+  const newLaunch = new Object.assign(launch, {
+    flightNumber: newFlightNumber,
     customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
     upcoming: true,
     success: true,
   });
+
+  await saveLaunch(newLaunch)
 }
 
 // function addLaunch(newLaunch) {
@@ -130,4 +134,5 @@ module.exports = {
   saveLaunch,
   existsLaunchID,
   abortLaunch,
+  scheduleLaunch
 };
