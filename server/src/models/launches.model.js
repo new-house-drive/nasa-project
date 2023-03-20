@@ -68,6 +68,15 @@ async function existsLaunchID(id) {
  * version 1.1 valera 
  */
 async function abortLaunch(launch) {
+  const abortedLaunch = await launchesDatabase.updateOne({
+    flightNumber: launch
+  },
+  {
+    success: false,
+    upcoming: false
+  })
+
+  return abortedLaunch
 
   // const aborted = launchesDatabase.get(id);
   // aborted.success = false;
