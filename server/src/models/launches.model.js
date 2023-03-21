@@ -76,12 +76,7 @@ async function abortLaunch(launch) {
     upcoming: false
   })
 
-  return abortedLaunch
-
-  // const aborted = launchesDatabase.get(id);
-  // aborted.success = false;
-  // aborted.upcoming = false;
-  // return aborted;
+  return abortedLaunch.modifiedCount === 1
 }
 
 async function saveLaunch(launch) {
