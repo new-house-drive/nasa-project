@@ -35,7 +35,7 @@ async function httpAbortLaunch(req, res) {
     const launchID = +req.params.id
     const idIsExisting = await existsLaunchID(launchID)
     if (idIsExisting) {
-        const aborted = abortLaunch(launchID)
+        const aborted = await abortLaunch(launchID)
         return res.status(200).json(aborted)
     }
 
