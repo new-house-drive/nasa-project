@@ -25,14 +25,14 @@ describe("Test Launches API", () => {
   describe("Test adding a launch to collection", () => {
     completeLaunchData = {
       mission: "Olena Metelyk Vision",
-      target: "Dmytro Faliush Enterprise",
+      target: "Kepler-1649 b",
       rocket: "Hex",
       launchDate: "January 17, 2042",
     };
 
     launchDataWithoutDate = {
       mission: "Olena Metelyk Vision",
-      target: "Dmytro Faliush Enterprise",
+      target: "Kepler-1649 b",
       rocket: "Hex",
     };
 
@@ -44,7 +44,7 @@ describe("Test Launches API", () => {
 
     launchDataWithInvalidDate = {
       mission: "Olena Metelyk Vision",
-      target: "Dmytro Faliush Enterprise",
+      target: "Kepler-1649 b",
       rocket: "Hex",
       launchDate: "Будут бальшиє? Будут і бальшиє в том чіслє.",
     };
