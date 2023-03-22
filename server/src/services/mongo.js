@@ -14,9 +14,15 @@ mongoose.connection.on('error', (err) => {
  *  handles the connection to MongoDB
  */
 async function mongoConnect() {
-    mongoose.connect(MONGO_URL)
+    await mongoose.connect(MONGO_URL)
+}
+/** Handles the disconnection from MongoDB
+ */
+async function mongoDisconnect() {
+    await mongoose.disconnect()
 }
 
 module.exports = {
-    mongoConnect
+    mongoConnect,
+    mongoDisconnect
 }
