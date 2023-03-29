@@ -15,7 +15,7 @@ describe("Test Launches API", () => {
     test("Expect to be 200", async () => {
       mongoConnect();
       await request(app)
-        .get("/launches")
+        .get("/v1/launches")
         .expect("Content-Type", /json/)
         .expect(200);
       // expect(response.statusCode).toBe(200)
@@ -51,7 +51,7 @@ describe("Test Launches API", () => {
 
     test("Should return 201 Created", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(completeLaunchData)
         .expect("Content-Type", /json/)
         .expect(201);
@@ -64,7 +64,7 @@ describe("Test Launches API", () => {
 
     test("Should return error the parameter is missing.", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchDataWithoutTarget)
         .expect(400);
 
@@ -75,7 +75,7 @@ describe("Test Launches API", () => {
 
     test("Should return error the date is invalid.", async () => {
       const response = await request(app)
-        .post("/launches")
+        .post("/v1/launches")
         .send(launchDataWithInvalidDate)
         .expect(400);
 
