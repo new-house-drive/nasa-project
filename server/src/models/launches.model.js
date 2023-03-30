@@ -15,22 +15,6 @@ const launch = {
   customers: ["Dmytro Faliush", "Olena Metelyk"],
 };
 // launchesDatabase.set(launch.flightNumber, launch);
-
-/** 
-  returns all values in MongoDB launches collection
-
-  version: 1.0 valera
-*/
-async function getAllLaunches() {
-  return await launchesDatabase.find(
-    {},
-    {
-      _id: 0,
-      __V: 0,
-    }
-  );
-}
-
 /**
  *  returns the latest flight Number in mongo collection. Sorts in DESCENDING ORDER
  *  Used only in saveLaunch()
@@ -47,6 +31,25 @@ async function getLatestFlightNumber() {
   if (!latestFlightNumber.flightNumber) return DEFAULT_FLIGHT_NUMBER;
 
   return latestFlightNumber.flightNumber;
+}
+
+/**
+ * * Public methods start here
+ */
+
+/** 
+  returns all values in MongoDB launches collection
+
+  version: 1.0 valera
+*/
+async function getAllLaunches() {
+  return await launchesDatabase.find(
+    {},
+    {
+      _id: 0,
+      __V: 0,
+    }
+  );
 }
 
 /**
@@ -125,6 +128,14 @@ async function scheduleLaunch(launch) {
   await saveLaunch(newLaunch)
 }
 
+/**
+ * * method connects to SpaceX API
+ * 
+ */
+async function loadLaunchesData() {
+  console.log("Downloading the launches from Elon Musk...")
+}
+
 // function addLaunch(newLaunch) {
 //   lastFlightNumber++;
 //   launchesDatabase.set(
@@ -143,5 +154,6 @@ module.exports = {
   saveLaunch,
   existsLaunchID,
   abortLaunch,
-  scheduleLaunch
+  scheduleLaunch,
+  loadLaunchesData
 };
