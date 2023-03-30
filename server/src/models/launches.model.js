@@ -1,5 +1,6 @@
 const launchesDatabase = require("./launches.mongo");
 const planetsDatabase = require("./planets.mongo");
+const axios = require("axios");
 // const launchesDatabase = new Map()
 
 const DEFAULT_FLIGHT_NUMBER = 100;
@@ -55,31 +56,33 @@ async function getAllLaunches() {
 /**
  * existsLaunchID now uses the MongoDB
  * for connection
- * 
+ *
  * version 1.1.
  * valera
  */
 async function existsLaunchID(id) {
   return await launchesDatabase.findOne({
-    flightNumber: id
+    flightNumber: id,
   });
 }
 /**
- * abortLaunch function handles the request from 
+ * abortLaunch function handles the request from
  * the controller and updates the database
- * 
- * version 1.1 valera 
+ *
+ * version 1.1 valera
  */
 async function abortLaunch(launch) {
-  const abortedLaunch = await launchesDatabase.updateOne({
-    flightNumber: launch
-  },
-  {
-    success: false,
-    upcoming: false
-  })
+  const abortedLaunch = await launchesDatabase.updateOne(
+    {
+      flightNumber: launch,
+    },
+    {
+      success: false,
+      upcoming: false,
+    }
+  );
 
-  return abortedLaunch.modifiedCount === 1
+  return abortedLaunch.modifiedCount === 1;
 }
 
 async function saveLaunch(launch) {
@@ -116,8 +119,7 @@ async function saveLaunch(launch) {
  * v. 1.0 valera
  */
 async function scheduleLaunch(launch) {
-
-  const newFlightNumber = await getLatestFlightNumber() + 1
+  const newFlightNumber = (await getLatestFlightNumber()) + 1;
   const newLaunch = Object.assign(launch, {
     flightNumber: newFlightNumber,
     customers: ["Max Kats", "Steve Huys", "Ostap Vishnou"],
@@ -125,15 +127,35 @@ async function scheduleLaunch(launch) {
     success: true,
   });
 
-  await saveLaunch(newLaunch)
+  await saveLaunch(newLaunch);
 }
 
 /**
  * * method connects to SpaceX API
- * 
+ *
  */
+const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
 async function loadLaunchesData() {
-  console.log("Downloading the launches from Elon Musk...")
+  console.log("Downloading the launches from Elon Musk...");
+  const response = await axios.post(SPACEX_API_URL, {
+    query: {},
+    options: {
+      populate: [
+        {
+          path: "rocket",
+          select: {
+            name: 1,
+          },
+        },
+        {
+          path: "payloads",
+          select: {
+            customers: 1
+          }
+        }
+      ],
+    },
+  });
 }
 
 // function addLaunch(newLaunch) {
@@ -155,5 +177,5 @@ module.exports = {
   existsLaunchID,
   abortLaunch,
   scheduleLaunch,
-  loadLaunchesData
+  loadLaunchesData,
 };
