@@ -6,10 +6,18 @@ const PORT = process.env.PORT || 8000;
 const server = http.createServer(app);
 
 const { loadPlanetsData } = require("./models/planets.model");
+const { loadLaunchesData } = require("./models/launches.model");
 
 async function startServer() {
   await mongoConnect();
   await loadPlanetsData();
+
+  /**
+   * * loadLaunchesData() connects to SpaceX API
+   * ! Not yet completed
+   */
+  await loadLaunchesData()
+
   server.listen(PORT, () => {
     try {
       //throw new Error('Your momma')
