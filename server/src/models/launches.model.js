@@ -68,7 +68,7 @@ async function getAllLaunches() {
  * valera
  */
 async function existsLaunchID(id) {
-  return await launchesDatabase.findOne({
+  return await findLaunch({
     flightNumber: id,
   });
 }
