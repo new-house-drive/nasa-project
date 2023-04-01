@@ -3,6 +3,7 @@ const planetsDatabase = require("./planets.mongo");
 const axios = require("axios");
 // const launchesDatabase = new Map()
 
+const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
 const DEFAULT_FLIGHT_NUMBER = 100;
 
 const launch = {
@@ -46,6 +47,7 @@ async function findLaunch(filter) {
  * inserts all the launches from there to 
  * our MongoDB.
  * ! Used in public loadLaunchesData() only
+ * ! Unfinished! See todo!
  * version 1.0 valera
 */
 async function populateDatabase() {
@@ -89,6 +91,8 @@ async function populateDatabase() {
     };
     console.log(launch.flightNumber, launch.mission);
   }
+
+  // TODO: Populate collection to MongoDB
 }
 
 
@@ -192,7 +196,6 @@ async function scheduleLaunch(launch) {
  * * method connects to SpaceX API
  * version 1.1 valera
  */
-const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
 async function loadLaunchesData() {
   const checkIfDataDownloaded = await findOne({
     flightNumber: 1,
