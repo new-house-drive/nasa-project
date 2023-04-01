@@ -34,6 +34,13 @@ async function getLatestFlightNumber() {
   return latestFlightNumber.flightNumber;
 }
 
+/** generic function that gets Query and 
+ * searches for it in MongoDB
+*/
+async function findLaunch(filter) {
+  await launchesDatabase.findOne(filter)
+}
+
 /**
  * * Public methods start here
  */
