@@ -42,6 +42,57 @@ async function findLaunch(filter) {
 }
 
 /**
+ * Database connects to the SPACEX_API and 
+ * inserts all the launches from there to 
+ * our MongoDB.
+ * ! Used in public loadLaunchesData() only
+ * version 1.0 valera
+*/
+async function populateDatabase() {
+  console.log("Downloading the launches from Elon Musk...");
+  const response = await axios.post(SPACEX_API_URL, {
+    query: {},
+    options: {
+      pagination: false,
+      populate: [
+        {
+          path: "rocket",
+          select: {
+            name: 1,
+          },
+        },
+        {
+          path: "payloads",
+          select: {
+            customers: 1,
+          },
+        },
+      ],
+    },
+  });
+
+  const launchDocs = response.data.docs;
+  for (const launchDoc of launchDocs) {
+    const payloads = launchDoc["payloads"];
+    const customers = payloads.flatMap((payload) => {
+      return payload["customers"];
+    });
+
+    const launch = {
+      flightNumber: launchDoc["flight_number"],
+      mission: launchDoc["name"],
+      rocket: launchDoc["rocket"]["name"],
+      launchDate: launchDoc["date_local"],
+      upcoming: launchDoc["upcoming"],
+      success: launchDoc["success"],
+      customers: customers,
+    };
+    console.log(launch.flightNumber, launch.mission);
+  }
+}
+
+
+/**
  * * Public methods start here
  */
 
@@ -139,50 +190,21 @@ async function scheduleLaunch(launch) {
 
 /**
  * * method connects to SpaceX API
- *
+ * version 1.1 valera
  */
 const SPACEX_API_URL = "https://api.spacexdata.com/v4/launches/query";
 async function loadLaunchesData() {
-  console.log("Downloading the launches from Elon Musk...");
-  const response = await axios.post(SPACEX_API_URL, {
-    query: {},
-    options: {
-      pagination: false,
-      populate: [
-        {
-          path: "rocket",
-          select: {
-            name: 1,
-          },
-        },
-        {
-          path: "payloads",
-          select: {
-            customers: 1,
-          },
-        },
-      ],
-    },
-  });
+  const checkIfDataDownloaded = await findOne({
+    flightNumber: 1,
+    rocket: "Falcon 1"
+  })
 
-  const launchDocs = response.data.docs;
-  for (const launchDoc of launchDocs) {
-    const payloads = launchDoc["payloads"];
-    const customers = payloads.flatMap((payload) => {
-      return payload["customers"];
-    });
-
-    const launch = {
-      flightNumber: launchDoc["flight_number"],
-      mission: launchDoc["name"],
-      rocket: launchDoc["rocket"]["name"],
-      launchDate: launchDoc["date_local"],
-      upcoming: launchDoc["upcoming"],
-      success: launchDoc["success"],
-      customers: customers,
-    };
-    console.log(launch.flightNumber, launch.mission)
+  if (checkIfDataDownloaded) {
+    console.log("Data is already loaded!")
+    return
   }
+
+  await populateDatabase();
 }
 
 // function addLaunch(newLaunch) {
@@ -206,3 +228,4 @@ module.exports = {
   scheduleLaunch,
   loadLaunchesData,
 };
+
