@@ -37,6 +37,8 @@ async function getLatestFlightNumber() {
 
 /** generic function that gets Query and
  * searches for it in MongoDB
+ * 
+ * version 1.1 valera
  */
 async function findLaunch(filter) {
   await launchesDatabase.findOne(filter);
@@ -47,7 +49,7 @@ async function findLaunch(filter) {
  * inserts all the launches from there to
  * our MongoDB.
  * 
- * version 1.0 valera
+ * version 1.1 valera
  */
 async function populateDatabase() {
   console.log("Downloading the launches from Elon Musk...");
