@@ -108,8 +108,8 @@ async function populateDatabase() {
   Shows first 50 launches, after skipping the first 20
   version: 1.1 valera
 */
-async function getAllLaunches() {
-  return await launchesDatabase.find({}, { _id: 0, __V: 0 }).skip(20).limit(50);
+async function getAllLaunches(skip, limit) {
+  return await launchesDatabase.find({}, { _id: 0, __V: 0 }).skip(skip).limit(limit);
 }
 
 /**
