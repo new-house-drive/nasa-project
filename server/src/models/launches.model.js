@@ -37,7 +37,7 @@ async function getLatestFlightNumber() {
 
 /** generic function that gets Query and
  * searches for it in MongoDB
- * 
+ *
  * version 1.1 valera
  */
 async function findLaunch(filter) {
@@ -48,7 +48,7 @@ async function findLaunch(filter) {
  * Database connects to the SPACEX_API and
  * inserts all the launches from there to
  * our MongoDB.
- * 
+ *
  * version 1.1 valera
  */
 async function populateDatabase() {
@@ -75,8 +75,8 @@ async function populateDatabase() {
   });
 
   if (response.status != 200) {
-    console.error("Problem downloading launch data...")
-    throw new Error("Launch query didn't receive 200!")
+    console.error("Problem downloading launch data...");
+    throw new Error("Launch query didn't receive 200!");
   }
 
   const launchDocs = response.data.docs;
@@ -105,17 +105,11 @@ async function populateDatabase() {
 
 /** 
   returns all values in MongoDB launches collection
-
-  version: 1.0 valera
+  Shows first 50 launches, after skipping the first 20
+  version: 1.1 valera
 */
 async function getAllLaunches() {
-  return await launchesDatabase.find(
-    {},
-    {
-      _id: 0,
-      __V: 0,
-    }
-  );
+  return await launchesDatabase.find({}, { _id: 0, __V: 0 }).skip(20).limit(50);
 }
 
 /**
