@@ -109,7 +109,10 @@ async function populateDatabase() {
   version: 1.1 valera
 */
 async function getAllLaunches(skip, limit) {
-  return await launchesDatabase.find({}, { _id: 0, __V: 0 }).skip(skip).limit(limit);
+  return await launchesDatabase.find({}, { _id: 0, __V: 0 })
+  .sort({ flightNumber: 1})
+  .skip(skip)
+  .limit(limit);
 }
 
 /**
