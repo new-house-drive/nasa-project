@@ -35,21 +35,20 @@ async function getLatestFlightNumber() {
   return latestFlightNumber.flightNumber;
 }
 
-/** generic function that gets Query and 
+/** generic function that gets Query and
  * searches for it in MongoDB
-*/
+ */
 async function findLaunch(filter) {
-  await launchesDatabase.findOne(filter)
+  await launchesDatabase.findOne(filter);
 }
 
 /**
- * Database connects to the SPACEX_API and 
- * inserts all the launches from there to 
+ * Database connects to the SPACEX_API and
+ * inserts all the launches from there to
  * our MongoDB.
- * ! Used in public loadLaunchesData() only
- * ! Unfinished! See todo!
+ * 
  * version 1.0 valera
-*/
+ */
 async function populateDatabase() {
   console.log("Downloading the launches from Elon Musk...");
   const response = await axios.post(SPACEX_API_URL, {
@@ -73,6 +72,10 @@ async function populateDatabase() {
     },
   });
 
+  if (response.status != 200) {
+    console.error("Problem downloading launch data...")
+  }
+
   const launchDocs = response.data.docs;
   for (const launchDoc of launchDocs) {
     const payloads = launchDoc["payloads"];
@@ -89,12 +92,9 @@ async function populateDatabase() {
       success: launchDoc["success"],
       customers: customers,
     };
-    console.log(launch.flightNumber, launch.mission);
+    await saveLaunch(launch);
   }
-
-  // TODO: Populate collection to MongoDB
 }
-
 
 /**
  * * Public methods start here
@@ -149,16 +149,6 @@ async function abortLaunch(launch) {
 
 async function saveLaunch(launch) {
   try {
-    const planet = await planetsDatabase.findOne({
-      keplerName: launch.target,
-    });
-
-    if (!planet) {
-      throw new Error(
-        `🧞 ${launch.mission} cannot be added because ${launch.target} is not a habitable planet. 👾`
-      );
-    }
-
     await launchesDatabase.findOneAndUpdate(
       {
         flightNumber: launch.flightNumber,
@@ -178,9 +168,19 @@ async function saveLaunch(launch) {
  * logic that saveLaunch() does, but validates
  * that all the data is passed correctly
  *
- * v. 1.0 valera
+ * added planet checker
+ * v. 1.1 valera
  */
 async function scheduleLaunch(launch) {
+  const planet = await planetsDatabase.findOne({
+    keplerName: launch.target,
+  });
+
+  if (!planet) {
+    throw new Error(
+      `🧞 ${launch.mission} cannot be added because ${launch.target} is not a habitable planet. 👾`
+    );
+  }
   const newFlightNumber = (await getLatestFlightNumber()) + 1;
   const newLaunch = Object.assign(launch, {
     flightNumber: newFlightNumber,
@@ -197,14 +197,14 @@ async function scheduleLaunch(launch) {
  * version 1.1 valera
  */
 async function loadLaunchesData() {
-  const checkIfDataDownloaded = await findOne({
+  const checkIfDataDownloaded = await launchesDatabase.findOne({
     flightNumber: 1,
-    rocket: "Falcon 1"
-  })
+    rocket: "Falcon 1",
+  });
 
   if (checkIfDataDownloaded) {
-    console.log("Data is already loaded!")
-    return
+    console.log("Data is already loaded!");
+    return;
   }
 
   await populateDatabase();
@@ -231,4 +231,3 @@ module.exports = {
   scheduleLaunch,
   loadLaunchesData,
 };
-
