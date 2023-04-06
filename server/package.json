@@ -4,9 +4,9 @@
   "description": "Nasa Mission Control API",
   "main": "server.js",
   "scripts": {
+    "start": "node src/server.js --watch",
     "test": "jest --detectOpenHandles",
     "test-watch": "jest --watch",
-    "start": "node src/server.js --watch",
     "cluster": "pm2 start src/server.js -i max"
   },
   "keywords": [],
