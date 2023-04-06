@@ -76,6 +76,7 @@ async function populateDatabase() {
 
   if (response.status != 200) {
     console.error("Problem downloading launch data...")
+    throw new Error("Launch query didn't receive 200!")
   }
 
   const launchDocs = response.data.docs;
