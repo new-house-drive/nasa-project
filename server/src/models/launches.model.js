@@ -41,7 +41,7 @@ async function getLatestFlightNumber() {
  * version 1.1 valera
  */
 async function findLaunch(filter) {
-  await launchesDatabase.findOne(filter);
+  return await launchesDatabase.findOne(filter);
 }
 
 /**
