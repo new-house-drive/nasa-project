@@ -21,18 +21,6 @@ async function getAllLaunches() {
   );
 }
 
-
-const launch = {
-  flightNumber: DEFAULT_FLIGHT_NUMBER,
-  launchDate: new Date("October 13, 2004"),
-  mission: "Balshie Premium",
-  target: "Kepler-1649 b",
-  rocket: "Balshie DF",
-  success: true,
-  upcoming: true,
-  customers: ["Dmytro Faliush", "Olena Metelyk"],
-};
-// launchesDatabase.set(launch.flightNumber, launch);
 /**
  *  returns the latest flight Number in mongo collection. Sorts in DESCENDING ORDER
  *  Used only in saveLaunch()
