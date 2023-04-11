@@ -105,3 +105,6 @@ dist
 
 # Dotenv
 .env
+
+cert.pem
+key.pem
