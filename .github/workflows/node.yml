@@ -15,7 +15,7 @@ jobs:
       CI: true
     strategy:
       matrix:
-        node-version: [ 14.x, 16x ]
+        node-version: [ 14.x, 16.x ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
