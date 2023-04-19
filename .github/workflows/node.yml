@@ -1,14 +1,13 @@
-
+# My custom CI please do not use it under any circumstances
+#
 
 
 name: NASA Project CI
 
 on:
   push:
-    types: [ created ]
     branches: [ main ]
   pull_request:
-    types: [ created ]
     branches: [ main ]
 jobs:
   build:
