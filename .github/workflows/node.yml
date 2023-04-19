@@ -5,8 +5,10 @@ name: NASA Project CI
 
 on:
   push:
+    types: [ created ]
     branches: [ main ]
   pull_request:
+    types: [ created ]
     branches: [ main ]
 jobs:
   build:
