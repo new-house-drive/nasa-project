@@ -4,7 +4,7 @@
   "description": "React based front-end and node.js server side",
   "main": "index.js",
   "scripts": {
-    "start": "npm run server client & npm run client",
+    "start": "npm run server & npm run client",
     "server": "npm start --prefix server",
     "client": "npm start --prefix client",
     "watch": "npm run server & npm run client",

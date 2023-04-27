@@ -16,6 +16,6 @@ RUN npm run build --prefix client
 COPY server/ server/
 
 USER node
-CMD [ "npm", "start", "--prefix", "server"]
+CMD [ "npm", "run", "deploy"]
 
 EXPOSE 8000
