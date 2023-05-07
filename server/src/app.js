@@ -12,6 +12,7 @@ app.use(cors({
 app.use(morgan('combined'))
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, '..', 'public')))
+app.use(express.static(path.join(__dirname, '..', '..', 'client', 'build')))
 
 app.use('/v1', api)
 app.get('/*', (req, res) => {
